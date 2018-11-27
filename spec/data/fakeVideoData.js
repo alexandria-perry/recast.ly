@@ -1,5 +1,6 @@
 // A simplified version of `exampleVideoData` to use for tests
-window.fakeVideoData = [{
+window.fakeVideoData = [
+{
   etag: 'L332gQTY',
   id: {
     videoId: '000001'
@@ -13,7 +14,8 @@ window.fakeVideoData = [{
       }
     }
   }
-}, {
+}, 
+{
   etag: 'SmEuSYxg',
   id: {
     videoId: '000002'
