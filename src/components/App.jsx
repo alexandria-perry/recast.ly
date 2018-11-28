@@ -1,6 +1,8 @@
 import VideoList from '../components/VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoPlayer from '../components/VideoPlayer.js';
+import youtube from '../config/youtube.js';
+import Search from '../components/Search.js'
 
 class App extends React.Component {
   constructor(props){
@@ -9,20 +11,38 @@ class App extends React.Component {
         currentPlayerVideo : exampleVideoData[0],
         videos : exampleVideoData
       }
-    }
+    
 
+  }
+  componentDidMount(){
+    this.props.searchYouTube({query:'cats' , max:5 , key: youtube }, (videos)=> { 
+      this.setState({
+          currentPlayerVideo : videos[0],
+          videos : videos
+      })
+   })
+     }
   onListItemClick(video) {
-    console.log('click')
     this.setState({
       currentPlayerVideo : video
     })  
   }
+  onButtonClick(searchTerm){
+    this.props.searchYouTube({query: searchTerm , max:5 , key: youtube }, (videos)=> { 
+      _.debounce( ()=> {this.setState({
+          currentPlayerVideo : videos[0],
+          videos : videos
+      }),500}
+   });
+  }
+
+
   render(){
     return(
   <div>
     <nav className="navbar">
       <div className="col-md-6 offset-md-3">
-        <div><h5><em>search</em> view goes here</h5></div>
+        <Search buttonClick={this.onButtonClick.bind(this)}/>
       </div>
     </nav>
     <div className="row">
